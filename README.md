@@ -8,4 +8,4 @@ n/a
 
 ## Credit
 
-See [here](.gitignore)
+See [here](credit.txt)
