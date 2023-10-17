@@ -1,0 +1,3 @@
+Credit (author; description):
+
+(GhostofGoes; .gitignore template)
