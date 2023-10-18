@@ -4,7 +4,7 @@
 
 import pygame as pg
 from pygame.locals import *
-from .color import BLACK, LGRAY1, WHITE
+from .color import BLACK, LGRAY1, LGRAY2, WHITE
 
 
 class Display(object):
@@ -17,26 +17,30 @@ class Display(object):
     height: int
     color: (int, int, int), 0 <= int <= 255
     """
-    def __init__(self, x, y, width: int, height: int, bgcolor=LGRAY1):
-        self.surface = pg.Surface((width, height))
-        self.rect = self.surface.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+    def __init__(self, x, y, width: int, height: int, bgcolor=LGRAY2):
+        self.surf = pg.Surface((width, height))
+        self.surf_rect = self.surf.get_rect(centerx=x)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
         self.bgcolor = bgcolor
-        self.surface.fill(self.color)
+        self.surf.fill(self.bgcolor)
         self.output = 0
-        self.font = pg.font.Font(".data/font/PocketCalculator.ttf", 32)
+        self.font = pg.font.Font("./data/font/PocketCalculator.ttf", 70)
         self.text = self.font.render(f"{str(self.output)}", True, BLACK)
-        self.text_rect = self.text.get_rect()
+        self.text_rect = self.text.get_rect(bottomright=(self.width, self.height))
 
     def update(self, output):
         self.output = output
-        self.text = str(self.output)
+        self.text = self.font.render(f"{str(self.output)}", True, BLACK)
+        self.text_rect = self.text.get_rect(bottomright=(self.width-10, self.height+8))
 
     def render(self, screen):
-        screen.fill(self.bgcolor)
-        screen.blit()
+        screen.blit(self.surf, self.surf_rect)
+        self.surf.blit(self.text, self.text_rect)
 
     def clear(self):
-        self.output = 9
-        self.text = str(self.output)
+        self.output = 0
+        self.text = self.font.render(f"{str(self.output)}", True, BLACK)
+        self.text_rect = self.text.get_rect()
