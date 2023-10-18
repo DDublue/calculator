@@ -5,9 +5,9 @@
 import sys
 import pygame as pg
 from pygame.locals import *
-from libs.display import Display
+from libs.main import main
 
 
 if __name__ == '__main__':
-    app = Display()
+    app = main()
     app.run()

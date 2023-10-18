@@ -1,12 +1,12 @@
-# display.py
-# Display class that updates and draws on Pygame instances
+# main.py
+# Main display class that updates and draws on Pygame instances
 # ---------------------------------------------------------------------
 
 import pygame as pg
 from pygame.locals import *
 from libs.color import BLACK, WHITE
 
-class Display(object):
+class main(object):
     """
     Display class that allows Pygame updating, rendering, and running
     """
