@@ -4,7 +4,12 @@
 
 import pygame as pg
 from pygame.locals import *
+
+from libs.button import Button
 from libs.color import BLACK, WHITE
+from libs.display import Display
+from libs.memory import Memory
+
 
 class main(object):
     """
