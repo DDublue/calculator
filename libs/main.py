@@ -30,7 +30,7 @@ class main(object):
             if event.type == pg.QUIT:
                 self.running = False
         
-    def logic(self):
+    def update(self):
         pass
 
     def render(self, screen):
@@ -40,7 +40,7 @@ class main(object):
     def run(self):
         while self.running:
             self.event_loop()
-            self.logic()
+            self.update()
             self.render(self.screen)
             self.clock.tick(self.fps)
         pg.quit()
