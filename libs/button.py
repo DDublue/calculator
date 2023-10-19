@@ -11,7 +11,7 @@ class Button(object):
     """
     Button GUI
     """
-    def __init__(self, char, x, y, width=100, height=100, color=LGRAY1):
+    def __init__(self, char, x, y, width=100, height=100):
         self.surf = pg.Surface((width, height))
         self.surf_rect = self.surf.get_rect()
         self._char = char
@@ -19,20 +19,32 @@ class Button(object):
         self.y = y
         self.width = width
         self.height = height
-        self.color = color
+        self.current_color = LGRAY1
+        self.main_color = LGRAY1
+        self.hover_color = LGRAY2
+        self.click_color = DGRAY1
         self.font = pg.font.Font("./data/font/PocketCalculator.ttf", 32)
         self.text = self.font.render(self._char, True, BLACK)
-        self.text_rect = self.text.get_rect()
+        self.text_rect = self.text.get_rect(center=(width//2, height//2))
+        self.button_down = False
+        self.button_up = True
     
-    def update(self): # update when button color is hover, in pressed state, and normal
+    def update(self): # update button color when idle, hover, and click
         pass
     
     def render(self, screen):
-        pass
+        screen.blit(self.surf, self.surf_rect)
+        self.surf.fill(self.current_color)
+        self.surf.blit(self.text, self.text_rect)
 
     @property
     def char(self):
         return self._char
+
+    def button_hover(self):
+        if self.surf_rect.collidepoint(pg.mouse.get_pos()):
+            return True
+        return False
 
     def button_pressed(self):
         if pg.MOUSEBUTTONDOWN:
