@@ -27,18 +27,36 @@ class main(object):
         self.display = Display(x=self.WIDTH//2, y=0,
                                width=300, height=70)
         self.memory = Memory()
+        self.esc_down = False
+        self.buttons = self._create_buttons()
 
-        self.down = False
+    def _create_buttons(self):
+        self.buttons = []
+        chars = [
+            'MC','MR','M-','M+',
+            'C','S','%','/',
+            '7','8','9','*',
+            '4','5','6','-',
+            '1','2','3','+',
+            'E', '0','.','='
+            ]
+        for row in range(6):
+            for col in range(4):
+                b = Button(char=chars[row*4+col], x=row, y=col)
+                print(b.char, end=' ')
+                self.buttons.append(b)
+            print()
+        return self.buttons
 
     def _event_loop(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.running = False
             elif event.type == pg.KEYDOWN and event.key == K_ESCAPE:
-                self.down = True
+                self.esc_down = True
 
-            if event.type == pg.KEYUP and event.key == K_ESCAPE and self.down:
-                self.down = False
+            if event.type == pg.KEYUP and event.key == K_ESCAPE and self.esc_down:
+                self.esc_down = False
                 self.running = False
 
     def _update(self):

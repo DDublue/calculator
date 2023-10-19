@@ -25,7 +25,6 @@ class Display(object):
         self.width = width
         self.height = height
         self.bgcolor = bgcolor
-        self.surf.fill(self.bgcolor)
         self.output = 0
         self.font = pg.font.Font("./data/font/PocketCalculator.ttf", 70)
         self.text = self.font.render(f"{str(self.output)}", True, BLACK)

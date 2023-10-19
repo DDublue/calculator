@@ -11,9 +11,9 @@ class Button(object):
     """
     Button GUI
     """
-    def __init__(self, char, x, y, width, height, color=LGRAY1):
+    def __init__(self, char, x, y, width=100, height=100, color=LGRAY1):
         self.surf = pg.Surface((width, height))
-        self.surf_rect = self.surf.get_rect(centerx=x)
+        self.surf_rect = self.surf.get_rect()
         self._char = char
         self.x = x
         self.y = y
@@ -34,5 +34,9 @@ class Button(object):
     def char(self):
         return self._char
 
-    def button_pressed(self, key):
-        pass
+    def button_pressed(self):
+        if pg.MOUSEBUTTONDOWN:
+            if self.surf_rect.collidepoint(pg.mouse.get_pos()):
+                return True
+        else:
+            return False
