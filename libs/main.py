@@ -26,27 +26,34 @@ class main(object):
         self.running = True
         self.display = Display(x=self.WIDTH//2, y=0,
                                width=300, height=70)
+        self.memory = Memory()
 
-    def event_loop(self):
+        self.down = False
+
+    def _event_loop(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.running = False
             elif event.type == pg.KEYDOWN and event.key == K_ESCAPE:
-                self.running = False
-        
-    def update(self):
-        self.display.update()
+                self.down = True
 
-    def render(self):
+            if event.type == pg.KEYUP and event.key == K_ESCAPE and self.down:
+                self.down = False
+                self.running = False
+
+    def _update(self):
+        self.display.update(self.memory.answer)
+
+    def _render(self):
         self.screen.fill(WHITE)
         self.display.render(self.screen)
         pg.display.update()
 
     def run(self):
         while self.running:
-            self.event_loop()
-            self.update()
-            self.render()
+            self._event_loop()
+            self._update()
+            self._render()
             self.clock.tick(self.fps)
         pg.quit()
 

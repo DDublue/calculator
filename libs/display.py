@@ -38,6 +38,7 @@ class Display(object):
 
     def render(self, screen):
         screen.blit(self.surf, self.surf_rect)
+        self.surf.fill(self.bgcolor)
         self.surf.blit(self.text, self.text_rect)
 
     def clear(self):
