@@ -38,11 +38,11 @@ class main(object):
             '7','8','9','*',
             '4','5','6','-',
             '1','2','3','+',
-            'E', '0','.','='
+            ' ', '0','.','='
             ]
         for row in range(6):
             for col in range(4):
-                b = Button(char=chars[row*4+col], x=row, y=col)
+                b = Button(char=chars[row*4+col], x=col*75, y=70+(row*55))
                 print(b.char, end=' ')
                 self.buttons.append(b)
             print()
@@ -61,10 +61,14 @@ class main(object):
 
     def _update(self):
         self.display.update(self.memory.answer)
+        for button in self.buttons:
+            button.update()
 
     def _render(self):
         self.screen.fill(WHITE)
         self.display.render(self.screen)
+        for button in self.buttons:
+            button.render(self.screen)
         pg.display.update()
 
     def run(self):
