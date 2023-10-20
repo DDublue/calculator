@@ -47,12 +47,11 @@ class Button(object):
         return self._char
 
     def button_hover(self):
-        print(pg.mouse.get_pos())
         if self.surf_rect.collidepoint(pg.mouse.get_pos()):
             return True
         return False
 
     def button_pressed(self):
-        if pg.MOUSEBUTTONDOWN and self.button_hover():
-            return True
-        return False
+        for event in pg.event.get():
+            if event.type == pg.MOUSEBUTTONDOWN:
+                pass
