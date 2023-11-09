@@ -58,6 +58,9 @@ class main(object):
             if event.type == pg.KEYUP and event.key == K_ESCAPE and self.esc_down:
                 self.esc_down = False
                 self.running = False
+            
+            for button in self.buttons:
+                button.get_event(event)
 
     def _update(self):
         self.display.update(self.memory.answer)

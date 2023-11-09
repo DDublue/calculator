@@ -26,13 +26,13 @@ class Button(object):
         self.font = pg.font.Font("./data/font/PocketCalculator.ttf", 30)
         self.text = self.font.render(self._char, True, BLACK)
         self.text_rect = self.text.get_rect(center=(width//2, height//2))
+        self.hovering = False
         self.button_down = False
         self.button_up = True
     
     def update(self): # update button color when idle, hover, and click
-        if self.button_pressed():
-            self.current_color = self.click_color
-        elif self.button_hover():
+        self.button_hover()
+        if self.hovering:
             self.current_color = self.hover_color
         else:
             self.current_color = self.main_color
@@ -46,12 +46,25 @@ class Button(object):
     def char(self):
         return self._char
 
-    def button_hover(self):
+    def button_hover(self): # fix
         if self.surf_rect.collidepoint(pg.mouse.get_pos()):
-            return True
-        return False
+            self.hovering = True
+        else:
+            self.hovering = False
 
-    def button_pressed(self):
-        for event in pg.event.get():
-            if event.type == pg.MOUSEBUTTONDOWN:
-                pass
+    def button_pressed(self): # fix
+        if self.button_down:
+            self.button_up = False
+            
+            
+        
+                
+    def get_event(self, event): # fix
+        if self.hovering:
+            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                self.button_down = True
+                self.button_up = False
+            else:
+                self.button_down = False
+                self.button_up = True
+        
