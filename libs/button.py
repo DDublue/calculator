@@ -4,7 +4,7 @@
 
 import pygame as pg
 from pygame.locals import *
-from .color import BLACK, LGRAY1, LGRAY2, DGRAY1, WHITE
+from .color import BLACK, LGRAY2, GRAY2, WHITE
 
 
 class Button(object):
@@ -21,18 +21,20 @@ class Button(object):
         self.height = height
         self.main_color = WHITE
         self.hover_color = LGRAY2
-        self.click_color = DGRAY1
+        self.click_color = GRAY2
         self.current_color = self.main_color
         self.font = pg.font.Font("./data/font/PocketCalculator.ttf", 30)
         self.text = self.font.render(self._char, True, BLACK)
         self.text_rect = self.text.get_rect(center=(width//2, height//2))
         self.hovering = False
-        self.button_down = False
-        self.button_up = True
+        self.button_held = False
+        self.mb1 = False
     
     def update(self): # update button color when idle, hover, and click
         self.button_hover()
-        if self.hovering:
+        if self.button_held:
+            self.current_color = self.click_color
+        elif self.hovering and not self.mb1:
             self.current_color = self.hover_color
         else:
             self.current_color = self.main_color
@@ -46,25 +48,33 @@ class Button(object):
     def char(self):
         return self._char
 
-    def button_hover(self): # fix
+    def button_hover(self):
         if self.surf_rect.collidepoint(pg.mouse.get_pos()):
             self.hovering = True
         else:
             self.hovering = False
 
-    def button_pressed(self): # fix
-        if self.button_down:
-            self.button_up = False
-            
-            
-        
-                
+    def button_pressed(self):
+        if self.pressed:
+            self.pressed = False
+            return True
+        else:
+            return False
+                        
     def get_event(self, event): # fix
-        if self.hovering:
-            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                self.button_down = True
-                self.button_up = False
+        # detects if a button is pressed and held properly
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            self.mb1 = True
+            if self.surf_rect.collidepoint(event.pos):
+                print(f"[CHAR: {self._char}] button down!")
+                self.current_color = self.click_color
+                self.button_held = True
+        if event.type == pg.MOUSEBUTTONUP and event.button == 1:
+            self.mb1 = False
+            if self.surf_rect.collidepoint(event.pos) and self.button_held:
+                print(f"[CHAR: {self._char}] button up!")
+                self.current_color = self.main_color
+                self.pressed = True
             else:
-                self.button_down = False
-                self.button_up = True
-        
+                self.current_color = self.main_color
+            self.button_held = False
