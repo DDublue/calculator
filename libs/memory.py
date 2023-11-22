@@ -16,9 +16,9 @@ class Memory(object):
     self.cache: int = 0
     """
     def __init__(self):
-        self._current = 0
-        self._answer = 0
-        self._cache = 0
+        self._current = ""
+        self._answer = ""
+        self._cache = ""
 
     @property
     def current(self):
@@ -53,11 +53,11 @@ class Memory(object):
         self._cache -= cache
     
     def clear_current(self):
-        self._current = 0
+        self._current = ""
 
     def clear_answer(self):
-        self._answer = 0
+        self._answer = ""
         
     def clear_cache(self):
-        self._cache = 0
+        self._cache = ""
         

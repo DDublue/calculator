@@ -48,6 +48,12 @@ class main(object):
             print()
         return self.buttons
 
+    def match(self, button=Button, char=str):
+        return button.char == char
+
+    def can_decimal(self):
+        return 0 < len(self.memory.current) < 9
+
     def _event_loop(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -63,10 +69,23 @@ class main(object):
                 button.get_event(event)
 
     def _update(self):
-        self.display.update(self.memory.answer)
         for button in self.buttons:
             button.update()
-
+            if button.button_pressed():
+                if self.match(button, '0') and not self.memory.current:
+                    pass
+                elif self.match(button, '.') and self.can_decimal():
+                    pass
+                elif button.char in button.numbers and len(self.memory.current) < 9:
+                    self.memory.current += button.char
+                elif self.match(button, 'C'):
+                    self.memory.clear_current()
+                    self.memory.clear_answer()
+        if self.memory.current:
+            self.display.update(self.memory.current)
+        else:
+            self.display.update(self.memory.current + "0")
+            
     def _render(self):
         self.screen.fill(WHITE)
         self.display.render(self.screen)

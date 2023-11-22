@@ -11,6 +11,14 @@ class Button(object):
     """
     Button GUI
     """
+    numbers = [
+            '1','2','3','4','5',
+            '6','7','8','9','0'
+            ]
+    add, sub, multiply, divide = '+', '-', '*', '/'
+    percent, equal, decimal, clear = '%', '=', '.', 'C'
+    memclear, memrmbr, memsub, memadd = 'MC', 'MR', 'M-', 'M+'
+    
     def __init__(self, char, x, y, width=75, height=55):
         self.surf = pg.Surface((width, height))
         self.surf_rect = self.surf.get_rect(topleft=(x,y))
@@ -29,6 +37,7 @@ class Button(object):
         self.hovering = False
         self.button_held = False
         self.mb1 = False
+        self.pressed = False
     
     def update(self): # update button color when idle, hover, and click
         self.button_hover()
@@ -66,15 +75,11 @@ class Button(object):
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             self.mb1 = True
             if self.surf_rect.collidepoint(event.pos):
-                print(f"[CHAR: {self._char}] button down!")
                 self.current_color = self.click_color
                 self.button_held = True
         if event.type == pg.MOUSEBUTTONUP and event.button == 1:
             self.mb1 = False
             if self.surf_rect.collidepoint(event.pos) and self.button_held:
-                print(f"[CHAR: {self._char}] button up!")
-                self.current_color = self.main_color
                 self.pressed = True
-            else:
-                self.current_color = self.main_color
+            self.current_color = self.main_color
             self.button_held = False

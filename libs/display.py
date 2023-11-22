@@ -25,14 +25,13 @@ class Display(object):
         self.width = width
         self.height = height
         self.bgcolor = bgcolor
-        self.output = 0
+        self.output = "0"
         self.font = pg.font.Font("./data/font/PocketCalculator.ttf", 70)
         self.text = self.font.render(f"{str(self.output)}", True, BLACK)
         self.text_rect = self.text.get_rect(bottomright=(self.width, self.height))
 
     def update(self, output):
-        self.output = output
-        self.text = self.font.render(f"{str(self.output)}", True, BLACK)
+        self.text = self.font.render(f"{output}", True, BLACK)
         self.text_rect = self.text.get_rect(bottomright=(self.width-10, self.height+8))
 
     def render(self, screen):
